@@ -1,15 +1,75 @@
 {
-    "name": "materialdashboard",
-    "version": "0.0.1",
-    "description": "Material Dashboard UI",
-    "keywords": [
-        "ui5",
-        "openui5",
-        "sapui5"
-    ],
-    "main": "webapp/index.html",
-    "scripts": {
-        "deploy-config": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf"
+    "name": "material-availability",
+    "version": "1.0.0",
+    "description": "Material Availability",
+    "repository": "https://github.com/sap-samples/btp-extension-s4-material-availability.git",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+      "@sap-cloud-sdk/http-client": "^4.0.2",
+      "@sap-cloud-sdk/util": "^4.0.2",
+      "@sap/cds": "^8",
+      "express": "^4"
     },
-    "devDependencies": { }
-}
+    "devDependencies": {
+      "@cap-js/sqlite": "^1",
+      "@sap/ux-specification": "^1.108.15"
+    },
+    "scripts": {
+      "start": "cds-serve",
+      "watch-materialdashboard": "cds watch --open materialdashboard/webapp/index.html?sap-ui-xx-viewCache=false"
+    },
+    "cds": {
+      "requires": {
+        "SalesOrderA2X": {
+          "kind": "odata-v2",
+          "model": "srv/external/SalesOrderA2X",
+          "[sandbox]": {
+            "credentials": {
+              "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_ORDER_SRV/"
+            }
+          },
+          "[live]": {
+            "credentials": {
+              "destination": "V33S4HANA",
+              "path": "/sap/opu/odata/sap/API_SALES_ORDER_SRV/"
+            }
+          }
+        },
+        "ProductMasterA2X": {
+          "kind": "odata-v2",
+          "model": "srv/external/ProductMasterA2X",
+          "[sandbox]": {
+            "credentials": {
+              "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PRODUCT_SRV/"
+            }
+          },
+          "[live]": {
+            "credentials": {
+              "destination": "V33S4HANA",
+              "path": "/sap/opu/odata/sap/API_PRODUCT_SRV/"
+            }
+          }
+        },
+        "BasicProductAvailabilityInfo": {
+          "kind": "odata-v2",
+          "model": "srv/external/BasicProductAvailabilityInfo",
+          "[sandbox]": {
+            "credentials": {
+              "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PRODUCT_AVAILY_INFO_BASIC"
+            }
+          },
+          "[live]": {
+            "credentials": {
+              "destination": "V33S4HANA",
+              "path": "/sap/opu/odata/sap/API_PRODUCT_AVAILY_INFO_BASIC/"
+            }
+          }
+        }
+      }
+    },
+    "sapux": [
+      "materialdashboard"
+    ]
+  }
+  

@@ -94,15 +94,18 @@ sap.ui.define([
                 this.onRefresh();
             } else {
                 // Keep filtering out the completed sales orders upon search, as initially done in the view definition
-                var aTableSearchState = [new Filter("SDProcessStatus", FilterOperator.NE, "C")];
+                //debugger;
+                var aTableSearchState =[];
                 var sQuery = oEvent.getParameter("query");
 
                 if (sQuery && sQuery.length > 0) {
-                    // Search query in "SalesOrder" or "Material" or "SalesOrderItemText" properties of the collection
+                    var ProductTypeFilter = new Filter("ProductType", FilterOperator.Contains, sQuery);
                     var MaterialFilter = new Filter("Material", FilterOperator.Contains, sQuery);
-                    var SalesOrderFilter = new Filter("SalesOrder", FilterOperator.Contains, sQuery);
-                    var DescriptionFilter = new Filter("SalesOrderItemText", FilterOperator.Contains, sQuery);
-                    var QueryFilter = new Filter({ filters:[MaterialFilter, SalesOrderFilter, DescriptionFilter], and: false});       
+                    var LanguageFilter = new Filter("to_Description/Language", FilterOperator.EQ, 'EN');
+                    var DescriptionFilter = new Filter("to_Description/Description", FilterOperator.Contains, sQuery);
+                    var QueryFilter1 = new Filter({ filters:[LanguageFilter, DescriptionFilter], and: true});
+                    var QueryFilter = new Filter({ filters:[ProductTypeFilter, MaterialFilter], and: false});
+                    //var QueryFilter = new Filter({ filters:[ProductTypeFilter, MaterialFilter, QueryFilter1], and: false});
                     aTableSearchState.push(QueryFilter);
                 }
                 this._applySearch(aTableSearchState);
@@ -142,13 +145,16 @@ sap.ui.define([
          * @private
          */
         _applySearch: function(aTableSearchState) {
-            var oTable = this.byId("table"),
-                oViewModel = this.getModel("worklistView");
+            
+           debugger;
+           var oTable = this.byId("table"),
+           oViewModel = this.getModel("worklistView");
             oTable.getBinding("items").filter(aTableSearchState, "Application");
             // changes the noDataText of the list in case there are no filter results
             if (aTableSearchState.length !== 0) {
                 oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
             }
+
         }
 
     });

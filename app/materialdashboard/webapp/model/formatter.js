@@ -14,8 +14,18 @@ sap.ui.define([], function () {
                 return "";
             }
             return parseFloat(sValue).toFixed(2);
-        }
+        },
 
+        getEnglishDescription: function (descriptions) {
+            for(var i=0 ; i<descriptions.length; i++)
+            {
+                if(descriptions[i].Language == 'EN')
+                {
+                    return descriptions[i].Description;
+                }
+            }
+            //for loop in descriptions.results until descriptions.results[i].Language === "EN" and return it
+       }
     };
 
 });

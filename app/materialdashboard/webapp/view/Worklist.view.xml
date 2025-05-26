@@ -1,57 +1,21 @@
-<mvc:View
-    controllerName="materialdashboard.controller.Worklist"
-    xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:semantic="sap.f.semantic">
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic" controllerName="materialdashboard.controller.Worklist">
 
-    <semantic:SemanticPage
-        id="page"
-        headerPinnable="false"
-        toggleHeaderOnTitleClick="false">
+    <semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false">
 
         <semantic:titleHeading>
-            <Title
-                text="{i18n>worklistTitle}"
-                level="H2"/>
+            <Title text="{i18n>worklistTitle}" level="H2"/>
         </semantic:titleHeading>
 
         <semantic:content>
-            <Table
-                id="table"
-                width="auto"
-                items="{
-                    path: '/SalesOrder',
-                    sorter: {
-                        path: 'DeliveryPriority',
-                        descending: false
-                    },
-                    filters: {
-                        path: 'SDProcessStatus',
-                        operator: 'NE',
-                        value1: 'C'
-                    }
-                }"
-                noDataText="{worklistView>/tableNoDataText}"
-                busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-                growing="true"
-                growingScrollToLoad="true"
-                updateFinished=".onUpdateFinished">
+            <Table id="table" width="auto" items="{path: '/Material', parameters: {expand: 'to_Description', $select : 'to_Description/Description'}}" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
-                        <Title
-                            id="tableHeader"
-                            text="{worklistView>/worklistTableTitle}"
-                            level="H3"/>
-                        <ToolbarSpacer />
-                        <SearchField
-                            id="searchField"
-                            tooltip="{i18n>worklistSearchTooltip}"
-                            search=".onSearch">
+                        <Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
+                        <ToolbarSpacer/>
+                        <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch">
                             <layoutData>
-                                <OverflowToolbarLayoutData
-                                    maxWidth="200px"
-                                    priority="NeverOverflow"/>
+                                <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                             </layoutData>
                         </SearchField>
                     </OverflowToolbar>
@@ -59,52 +23,42 @@
 
                 <columns>
                     <Column id="materialColumn">
-                        <Text text="{i18n>tableMaterialColumnTitle}" id="materialColumnTitle"/>
-                    </Column>
-                    <Column id="salesOrderColumn">
-                        <Text text="{i18n>tableSalesOrderColumnTitle}" id="salesOrderColumnTitle"/>
+                        <Text text="{i18n>tableProductColumnTitle}" id="materialColumnTitle"/>
                     </Column>
                     <Column id="itemTextColumn">
-                        <Text text="{i18n>tableItemTextColumnTitle}" id="itemTextColumnTitle"/>
+                        <Text text="{i18n>tableItemTextColumnTitle}" id="itemTextTitle"/>
                     </Column>
-                    <Column id="plantColumn">
-                        <Text text="{i18n>tableProductionPlantColumnTitle}" id="plantColumnTitle"/>
+                    <Column id="ProductTypeColumn">
+                        <Text text="{i18n>tableProductTypeColumnTitle}" id="ProductTypeColumnTitle"/>
                     </Column>
-                    <Column id="deliveryPriorityColumn">
-                        <Text text="{i18n>tableDeliveryPriorityColumnTitle}" id="deliveryPriorityColumnTitle"/>
+                    <Column id="LastChangeDateColumn">
+                        <Text text="{i18n>tableLastChangeDateColumnTitle}" id="LastChangeDateColumnTitle"/>
                     </Column>
-                    <Column id="sdProcessStatusColumn">
-                        <Text text="{i18n>tableSDProcessStatusColumnTitle}" id="sdProcessStatusColumnTitle"/>
+                    <Column id="ProductGroupColumn">
+                        <Text text="{i18n>tableProductGroupColumnTitle}" id="ProductGroupColumnTitle"/>
                     </Column>
-                    <Column id="deliveryStatusColumn">
-                        <Text text="{i18n>tableDeliveryStatusColumnTitle}" id="deliveryStatusColumnTitle"/>
+                    <Column id="ItemCategoryGroupColumn">
+                        <Text text="{i18n>tableItemCategoryGroupColumnTitle}" id="ItemCategoryGroupColumnTitle"/>
                     </Column>
-                    <Column id="unitNumberColumn" hAlign="End">
-                        <Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/>
+                    <Column id="ProductManufacturerNumberColumn">
+                        <Text text="{i18n>tableProductManufacturerNumberColumnTitle}" id="ProductManufacturerNumberColumnTitle"/>
                     </Column>
                 </columns>
 
                 <items>
-                    <ColumnListItem
-                        type="Navigation"
-                        press=".onPress">
+                    <ColumnListItem type="Navigation" press=".onPress" >
                         <cells>
-                            <Text text = "{Material}"/>
-                            <ObjectIdentifier
-                                title="{SalesOrder}"/>
-                            <Text text = "{SalesOrderItemText}"/>  
-                            <Text text = "{ProductionPlant}"/> 
-                            <Text text = "{DeliveryPriority}"/>
-                            <Text text = "{SDProcessStatus}"/>
-                            <Text text = "{DeliveryStatus}"/>
-                            <ObjectNumber
-                                number="{
-                                    path: 'RequestedQuantity',
-                                    formatter: '.formatter.numberUnit'
-                                }"
-                                unit="{RequestedQuantityUnit}" />
+                            <ObjectIdentifier text="{Material}"/>
+                            <Text text="{path: 'to_Description', targetType: 'any', formatter: '.formatter.getEnglishDescription'}"/>
+                            <Text text="{ProductType}"/>
+                            <Text text="{LastChangeDate}"/>
+                            <Text text="{ProductGroup}"/> 
+                            <Text text="{ItemCategoryGroup}"/>
+                            <Text text="{ProductManufacturerNumber}"/>
                         </cells>
                     </ColumnListItem>
+                    
+                             
                 </items>
             </Table>
         </semantic:content>
