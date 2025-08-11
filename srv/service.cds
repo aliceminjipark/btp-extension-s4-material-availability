@@ -4,6 +4,8 @@ using ProductMasterA2X as ProductSRV from './external/ProductMasterA2X';
 
 using BasicProductAvailabilityInfo as BasicAvailabilitySrv from './external/BasicProductAvailabilityInfo.cds';
 
+using Product as ProductSRVNew from './external/Product.cds';
+
 extend ProductSRV.A_ProductPlant
 {
     virtual AvailableQuantity : type of BasicAvailabilitySrv.AvailabilityRecord:AvailableQuantityInBaseUnit not null
@@ -25,6 +27,112 @@ extend ProductSRV.A_ProductPlant
 @path : '/material-availability'
 service MaterialAvailability
 {
+    annotate Product with @Capabilities.NavigationRestrictions : 
+    {
+        RestrictedProperties :
+        [
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductChangeMaster,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductDescription,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductEWMWarehouse,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductPlant,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductProcurement,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductQualityManagement,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductSales,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductSalesDelivery,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductStorage,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductUnitOfMeasure,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            },
+            {
+                $Type : 'Capabilities.NavigationPropertyRestriction',
+                NavigationProperty : _ProductValuation,
+                InsertRestrictions :
+                {
+                    $Type : 'Capabilities.InsertRestrictionsType',
+                    Insertable : true
+                }
+            }
+        ]
+    };
+
     @readonly
     entity SalesOrder as
         projection on SalesOrdersSRV.A_SalesOrderItem
@@ -103,4 +211,14 @@ service MaterialAvailability
         timestamp : Timestamp
     )
     returns BasicAvailabilitySrv.AvailabilityRecord;
+
+    entity Product as
+        projection on ProductSRVNew.Product
+        {
+            Product,
+            _ProductDescription
+        };
+
+    entity ProductDescription as
+        projection on ProductSRVNew.ProductDescription;
 }

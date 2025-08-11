@@ -88,8 +88,8 @@ sap.ui.define([
             });
 
             // Set filtering in binding context of the sales order data, by the object id
-            var oSalesOrderTableBinding = this.getView().byId("salesOrdersTable").getBinding("items");
-            oSalesOrderTableBinding.filter([new Filter("Material", FilterOperator.EQ, sObjectId), new Filter("SDProcessStatus", FilterOperator.NE, "C")], "Application");
+            //var oSalesOrderTableBinding = this.getView().byId("salesOrdersTable").getBinding("items");
+            //oSalesOrderTableBinding.filter([new Filter("Material", FilterOperator.EQ, sObjectId), new Filter("SDProcessStatus", FilterOperator.NE, "C")], "Application");
 
             // Set material description binding context from appropriate language
             var sBindingPath = `/MaterialDescription(Material='${sObjectId}',Language='EN')`;

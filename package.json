@@ -9,7 +9,9 @@
     "@sap-cloud-sdk/http-client": "^4.0.2",
     "@sap-cloud-sdk/util": "^4.0.2",
     "@sap/cds": "^8",
-    "express": "^4"
+    "express": "^4",
+    "@sap-cloud-sdk/connectivity": "^3",
+    "@sap-cloud-sdk/resilience": "^3"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
@@ -53,6 +55,26 @@
           "credentials": {
             "destination": "V33S4HANA",
             "path": "/sap/opu/odata/sap/API_PRODUCT_SRV/"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "destination": "V33S4HANA"
+          }
+        }
+      },
+      "Product": {
+        "kind": "odata",
+        "model": "srv/external/Product",
+        "[sandbox]": {
+          "credentials": {
+            "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata4/sap/api_product/srvd_a2x/sap/product/0002/"
+          }
+        },
+        "[live]": {
+          "credentials": {
+            "destination": "V33S4HANA",
+            "path": "/sap/opu/odata4/sap/api_product/srvd_a2x/sap/product/0002/"
           }
         },
         "[production]": {

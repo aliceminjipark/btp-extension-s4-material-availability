@@ -7,7 +7,7 @@
         </semantic:titleHeading>
 
         <semantic:content>
-            <Table id="table" width="auto" items="{path: '/Material', parameters: {expand: 'to_Description', $select : 'to_Description/Description'}}" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onUpdateFinished">
+            <Table id="table" width="auto" items="{path: '/Material', parameters: {expand: 'to_Description', $select : 'to_Description/Description'}}" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="false" growingScrollToLoad="false" updateFinished=".onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>

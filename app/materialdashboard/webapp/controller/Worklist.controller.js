@@ -1,3 +1,4 @@
+
 sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
@@ -94,8 +95,37 @@ sap.ui.define([
                 this.onRefresh();
             } else {
                 // Keep filtering out the completed sales orders upon search, as initially done in the view definition
-                //debugger;
-                var aTableSearchState =[];
+                debugger;
+
+                //var aFilters= [];
+
+                //var oFilter = new sap.ui.model.Filter("to_Description/Language",sap.ui.model.FilterOperator.EQ,"EN");
+                //var oFilter = new sap.ui.model.Filter("to_Description/Description",sap.ui.model.FilterOperator.Contains,"OverDimensional Charges");
+                //var oFilter = new sap.ui.model.Filter("Material",sap.ui.model.FilterOperator.EQ,"237");
+                //var QueryFilter1 = new Filter({ filters:[oFilter, Description], and: true});
+
+                //aFilters.push(oFilter);
+
+                //this._applySearch(aFilters);
+                var sQuery = oEvent.getParameter("query");
+                var length = this.getView().byId("table").getItems().length;
+                for(var i=0; i <length; i++)
+                {
+                    if(this.getView().byId("table").getItems()[i].getCells()[0].getText().toUpperCase().includes(sQuery.toUpperCase()) 
+                        || this.getView().byId("table").getItems()[i].getCells()[1].getText().toUpperCase().includes(sQuery.toUpperCase())
+                        || this.getView().byId("table").getItems()[i].getCells()[2].getText().toUpperCase().includes(sQuery.toUpperCase()))
+                    {
+                        this.getView().byId("table").getItems()[i].setVisible(true);
+                    }
+                    else
+                    {
+                        this.getView().byId("table").getItems()[i].setVisible(false);
+                    }
+                }
+
+                //this.getView().byId("table").getItems()[0].setVisible(false);
+
+                /*var aTableSearchState =[];
                 var sQuery = oEvent.getParameter("query");
 
                 if (sQuery && sQuery.length > 0) {
@@ -104,11 +134,11 @@ sap.ui.define([
                     var LanguageFilter = new Filter("to_Description/Language", FilterOperator.EQ, 'EN');
                     var DescriptionFilter = new Filter("to_Description/Description", FilterOperator.Contains, sQuery);
                     var QueryFilter1 = new Filter({ filters:[LanguageFilter, DescriptionFilter], and: true});
-                    var QueryFilter = new Filter({ filters:[ProductTypeFilter, MaterialFilter], and: false});
-                    //var QueryFilter = new Filter({ filters:[ProductTypeFilter, MaterialFilter, QueryFilter1], and: false});
+                    //var QueryFilter = new Filter({ filters:[ProductTypeFilter, MaterialFilter], and: false});
+                    var QueryFilter = new Filter({ filters:[ProductTypeFilter, MaterialFilter, QueryFilter1], and: false});
                     aTableSearchState.push(QueryFilter);
                 }
-                this._applySearch(aTableSearchState);
+                this._applySearch(aTableSearchState);*/
             }
 
         },
